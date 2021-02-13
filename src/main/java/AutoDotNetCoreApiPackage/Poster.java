@@ -15,9 +15,12 @@ public class Poster {
 	Object Data;
 	String Url;
 	OkHttpClient client;
+	String JWT;
 	public Poster(Object data, String url,String jwt) {
 		Data = data;
 		client = new OkHttpClient.Builder().addInterceptor(new JwtAuthenticationInterceptor(jwt)).build();
+		this.Url=url;
+		this.JWT=jwt;
 	}
 
 	public String post() throws IOException {

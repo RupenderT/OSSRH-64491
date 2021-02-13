@@ -11,6 +11,19 @@ public class AutoDotNetCoreApiTable<T> extends AutoDotNetCoreApi<T> implements I
 		// TODO Auto-generated constructor stub
 	}
 
+	public WhereClause<AutoDotNetCoreApiTable<T>> Where(String on) {
+		try {
+			this.currentWhereOn=on;
+			AutoDotNetCoreApi<T> copy = (AutoDotNetCoreApiTable<T>) this.clone();
+			return new WhereClause<AutoDotNetCoreApiTable<T>(this.currentWhereOn, copy);
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	} 
+	
 	public boolean Add(T model) {
 		String url = GetAPIUrl(RequestType.POST);
 		Poster poster = new Poster(model, url,JWT);

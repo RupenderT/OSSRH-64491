@@ -1,17 +1,25 @@
 package AutoDotNetCoreApiPackage;
+import java.lang.reflect.*;
 
 public class WhereClause<T,U>  {
 
 	String On;
 	T Obj;
+	Class<T> Type;
 
 	public WhereClause(String on, T obj) {
 		this.On = on;
 		this.Obj = obj;
 	}
 
-	public T Above(String val) {
-		((AutoDotNetCoreApi<U>)Obj).Data.where.add(new SqlWhereClause(this.On,val,">"));
+	public U Above(String val) {
+	Field data=Obj.getClass().getField("Data");
+	 Method where=data.getClass().getMethod("where",null);
+	 Class[] carg=new Class[1];
+	 carg[0]=SqlWhereClause.class;
+	 Method add=where.getClass().getMethod("add",carg );
+	 add.
+		Obj.Data.where.add(new SqlWhereClause(this.On,val,">"));
 		return this.Obj;
 	}
 

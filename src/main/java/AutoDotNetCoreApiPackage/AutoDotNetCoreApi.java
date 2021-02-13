@@ -71,18 +71,7 @@ public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 		return this;
 	}
 
-	public WhereClause<AutoDotNetCoreApi<T>,T> Where(String on) {
-		try {
-			this.currentWhereOn=on;
-			AutoDotNetCoreApi<T> copy = (AutoDotNetCoreApi<T>) this.clone();
-			return new WhereClause<AutoDotNetCoreApi<T>,T>(this.currentWhereOn, copy);
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-
-	}
+	
 
 	public T[] Execute(RequestType type) {
 		String url = GetAPIUrl(type);
