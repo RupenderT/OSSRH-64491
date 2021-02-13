@@ -1,0 +1,17 @@
+cmd.exe
+/X
+/C
+""C:\Program Files\Java\jdk1.8.0_281\jre\..\bin\javadoc.exe" @options @argfile"
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\allclasses-frame.html = 1613207906394
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\allclasses-noframe.html = 1613207906400
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\argfile = 1613207904851
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\constant-values.html = 1613207905993
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\deprecated-list.html = 1613207906378
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\help-doc.html = 1613207906417
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\index-all.html = 1613207906360
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\index.html = 1613207906406
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\options = 1613207904850
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\overview-tree.html = 1613207906339
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\package-list = 1613207905939
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\script.js = 1613207906437
+C:\Users\MIPL\eclipse-workspace\AutoDotNetCoreApi-maven\target\apidocs\stylesheet.css = 1613207906431
