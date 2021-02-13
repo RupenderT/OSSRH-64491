@@ -22,7 +22,7 @@ public class Program {
          if(e.length>0) {
         	 Employee e1=e[0];
         	 e1.lastName="javaup";
-        	 employee.Where("lastname").Equals("java")
+        	 employee.Where("lastname").Equals("java").Update(e1);
          }
          
 	}

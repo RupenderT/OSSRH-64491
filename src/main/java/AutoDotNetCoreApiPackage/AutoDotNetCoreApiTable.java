@@ -11,11 +11,11 @@ public class AutoDotNetCoreApiTable<T> extends AutoDotNetCoreApi<T> implements I
 		// TODO Auto-generated constructor stub
 	}
 
-	public WhereClause<AutoDotNetCoreApiTable<T>> Where(String on) {
+	public WhereClause<AutoDotNetCoreApiTable<T>,T> Where(String on) {
 		try {
 			this.currentWhereOn=on;
-			AutoDotNetCoreApi<T> copy = (AutoDotNetCoreApiTable<T>) this.clone();
-			return new WhereClause<AutoDotNetCoreApiTable<T>(this.currentWhereOn, copy);
+			AutoDotNetCoreApiTable<T> copy = (AutoDotNetCoreApiTable<T>) this.clone();
+			return new WhereClause<AutoDotNetCoreApiTable<T>,T>(this.currentWhereOn, copy);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
