@@ -1,4 +1,4 @@
-package AutoDotNetCoreApiPackage;
+/*package AutoDotNetCoreApiPackage;
 
 public class Employee {
 	 public String employeeID;
@@ -25,3 +25,4 @@ public class Employee {
     	 return "Employee{Name="+this.firstName+" "+this.lastName+", Id="+employeeID+"}";
      }
 }
+*/

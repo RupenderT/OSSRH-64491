@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
+import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -23,14 +24,13 @@ public class Poster {
 		this.JWT=jwt;
 	}
 
-	public String post() throws IOException {
+	public Call post() throws IOException {
         String json=this.PrepareJson();
 		RequestBody body = RequestBody.create(json, JSON);
 		System.out.println(json);
 		System.out.println(this.Url);
 		Request request = new Request.Builder().url(Url).post(body).build();
-	Response response = client.newCall(request).execute();
-			return response.body().string();
+	return  client.newCall(request);
 		
 	}
 

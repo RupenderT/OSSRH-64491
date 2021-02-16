@@ -4,35 +4,48 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class AutoDotNetCoreApiTable<T> extends AutoDotNetCoreApi<T> implements IAutoDotNetCoreAPITable<T> {
 
-	public AutoDotNetCoreApiTable(String tableName, String host,String jwt, Class<T[]> type) {
-		super(tableName, host,jwt,type);
+	public AutoDotNetCoreApiTable(String tableName, String host, String jwt, Class<T[]> type) {
+		super(tableName, host, jwt, type);
 		// TODO Auto-generated constructor stub
 	}
 
-	public WhereClause<AutoDotNetCoreApiTable<T>,T> Where(String on) {
+	public WhereClause<AutoDotNetCoreApiTable<T>, T> Where(String on) {
 		try {
-			this.currentWhereOn=on;
+			this.currentWhereOn = on;
 			AutoDotNetCoreApiTable<T> copy = (AutoDotNetCoreApiTable<T>) this.clone();
-			return new WhereClause<AutoDotNetCoreApiTable<T>,T>(this.currentWhereOn, copy);
+			return new WhereClause<AutoDotNetCoreApiTable<T>, T>(this.currentWhereOn, copy);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 
-	} 
-	
-	public boolean Add(T model) {
+	}
+
+	public void Add(T model, final ApiPostCallback<T> callback) {
 		String url = GetAPIUrl(RequestType.POST);
-		Poster poster = new Poster(model, url,JWT);
+		Poster poster = new Poster(model, url, JWT);
 		try {
-			String json = poster.post();
-			if (json == "1")
-				return true;
-			else
-				throw new Exception(json);
+			poster.post().enqueue(new Callback() {
+
+				@Override
+				public void onFailure(Call arg0, IOException arg1) {
+					callback.onFailure(arg1);
+				}
+
+				@Override
+				public void onResponse(Call arg0, Response res) throws IOException {
+					String json = res.body().string();
+					callback.call(json.equals("1"));
+
+				}
+			});
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -43,18 +56,29 @@ public class AutoDotNetCoreApiTable<T> extends AutoDotNetCoreApi<T> implements I
 			e.printStackTrace();
 
 		}
-		return false;
 	}
 
-	public boolean Update(T model) {
+	public void Update(T model,final ApiPostCallback<T> callback) {
 		String url = GetAPIUrl(RequestType.PUT);
-		Poster poster = new Poster(model, url,JWT);
+		this.Data.obj = model;
+		Poster poster = new Poster(this.Data, url, JWT);
 		try {
-			String json = poster.post();
-			if (json == "1")
-				return true;
-			else
-				throw new Exception(json);
+			poster.post().enqueue(new Callback() {
+
+				@Override
+				public void onFailure(Call arg0, IOException arg1) {
+					callback.onFailure(arg1);
+
+				}
+
+				@Override
+				public void onResponse(Call arg0, Response res) throws IOException {
+					String json = res.body().string();
+					callback.call(json.equals("1"));
+
+				}
+			});
+			;
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -65,18 +89,27 @@ public class AutoDotNetCoreApiTable<T> extends AutoDotNetCoreApi<T> implements I
 			e.printStackTrace();
 
 		}
-		return false;
 	}
 
-	public boolean Delete() {
+	public void Delete(final ApiPostCallback<T> callback) {
 		String url = GetAPIUrl(RequestType.DELETE);
-		SelectPoster poster = new SelectPoster(this.Data, url,JWT);
+		Poster poster = new Poster(this.Data, url, JWT);
 		try {
-			String json = poster.post();
-			if (json == "1")
-				return true;
-			else
-				throw new Exception(json);
+			poster.post().enqueue(new Callback() {
+
+				@Override
+				public void onFailure(Call arg0, IOException arg1) {
+					callback.onFailure(arg1);
+
+				}
+
+				@Override
+				public void onResponse(Call arg0, Response res) throws IOException {
+					String json = res.body().string();
+					callback.call(json.equals("1"));
+
+				}
+			});
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -87,7 +120,6 @@ public class AutoDotNetCoreApiTable<T> extends AutoDotNetCoreApi<T> implements I
 			e.printStackTrace();
 
 		}
-		return false;
 	}
 
 }

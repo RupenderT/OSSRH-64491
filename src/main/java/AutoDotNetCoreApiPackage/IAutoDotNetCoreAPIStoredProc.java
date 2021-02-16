@@ -8,6 +8,6 @@ package AutoDotNetCoreApiPackage;
  *
  */
 public interface IAutoDotNetCoreAPIStoredProc<T> {
-	T[] Select(String[] params);
+	T[] Select(String[] params,ApiSelectCallback<T> callback);
 
 }

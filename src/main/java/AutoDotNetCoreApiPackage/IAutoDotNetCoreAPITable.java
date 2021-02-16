@@ -10,9 +10,9 @@ package AutoDotNetCoreApiPackage;
 public interface IAutoDotNetCoreAPITable<T> {
 	Object Select(String[] arr);
 
-	boolean Add(T model);
+	void Add(T model,ApiPostCallback<T> callback);
 
-	boolean Update(T model);
+	void Update(T model,ApiPostCallback<T> callback);
 
-	boolean Delete();
+	void Delete(ApiPostCallback<T> callback);
 }

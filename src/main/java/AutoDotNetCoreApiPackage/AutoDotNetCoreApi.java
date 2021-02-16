@@ -5,6 +5,10 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 
 	PostData Data = new PostData();
@@ -20,8 +24,8 @@ public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 		this.JWT=jwt;
 	}
 
-	public T[] Get() {
-		return this.Execute(RequestType.GET);
+	public T[] Get(ApiSelectCallback<T> callback) {
+		return this.Execute(RequestType.GET,callback);
 	}
 	public AutoDotNetCoreApi<T> first() {
 		this.Data.top = 1;
@@ -61,9 +65,9 @@ public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 		return this;
 	}
 
-	public String Count() {
+	public String Count(final ApiCountCallback<T> callback) {
 		this.Data.select.add("COUNT(*) Total");
-		return ExecutePlain(RequestType.GET);
+		return ExecutePlain(RequestType.GET,callback);
 	}
 
 	public AutoDotNetCoreApi<T> Take(int number) {
@@ -73,13 +77,27 @@ public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 
 	
 
-	public T[] Execute(RequestType type) {
+	public T[] Execute(RequestType type, final ApiSelectCallback<T> callback) {
 		String url = GetAPIUrl(type);
-		SelectPoster poster = new SelectPoster(this.Data, url,JWT);
+		Poster poster = new Poster(this.Data, url,JWT);
 		try {
-			String json = poster.post();
-			T[] arr = new Gson().fromJson(json, this.Type);
-			return arr;
+			poster.post().enqueue(new Callback() {
+
+				@Override
+				public void onFailure(Call arg0, IOException arg1) {
+			
+					callback.onFailure(arg1);
+				}
+
+				@Override
+				public void onResponse(Call arg0, Response res) throws IOException {
+					String json=res.body().string();
+					T[] arr = new Gson().fromJson(json, Type);
+					callback.call(arr);
+					
+				}
+			});
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,8 +108,8 @@ public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 		return null;
 	}
 
-	public T[] GetResult() {
-		return this.Execute(RequestType.GET);
+	public T[] GetResult(final ApiSelectCallback<T> callback) {
+		return this.Execute(RequestType.GET,callback);
 	}
 	protected String GetAPIUrl(RequestType type) {
 		switch (type) {
@@ -110,13 +128,27 @@ public abstract class AutoDotNetCoreApi<T> implements Cloneable {
 		return null;
 	}
 
-	protected String ExecutePlain(RequestType type) {
+	protected String ExecutePlain(RequestType type, final ApiCountCallback<T> callback) {
 		String url = GetAPIUrl(type);
-		SelectPoster poster = new SelectPoster(this.Data, url,JWT);
+		Poster poster = new Poster(this.Data, url,JWT);
 		try {
-			String json = poster.post();
+			poster.post().enqueue(new Callback() {
 
-			return json;
+				@Override
+				public void onFailure(Call arg0, IOException arg1) {
+					callback.onFailure(arg1);
+					
+				}
+
+				@Override
+				public void onResponse(Call arg0, Response res) throws IOException {
+					String json=res.body().string();
+					callback.call(json);
+					
+				}
+			});
+
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

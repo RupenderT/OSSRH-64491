@@ -5,6 +5,10 @@ import java.io.IOException;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class AutoDotNetCoreApiStoredProc<T> implements IAutoDotNetCoreAPIStoredProc<T> {
 
 	String SP_Name;
@@ -18,14 +22,27 @@ public class AutoDotNetCoreApiStoredProc<T> implements IAutoDotNetCoreAPIStoredP
 		// TODO Auto-generated constructor stub
 	}
 
-	public T[] Select(String[] params) {
+	public T[] Select(String[] params,final ApiSelectCallback<T> callback) {
 
 		String url = this.API();
 		Poster poster = new Poster(params, url,JWT);
 		try {
-			String json = poster.post();
-			T[] arr = new Gson().fromJson(json, this.Type);
-			return arr;
+			 poster.post().enqueue(new Callback() {
+
+				@Override
+				public void onFailure(Call arg0, IOException arg1) {
+					callback.onFailure(arg1);
+					
+				}
+
+				@Override
+				public void onResponse(Call arg0, Response res) throws IOException {
+					String json=res.body().string();
+					T[] arr = new Gson().fromJson(json, Type);
+					callback.call(arr);
+					
+				}
+			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

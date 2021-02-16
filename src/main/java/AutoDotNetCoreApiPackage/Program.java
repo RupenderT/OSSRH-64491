@@ -1,17 +1,33 @@
-package AutoDotNetCoreApiPackage;
+/*package AutoDotNetCoreApiPackage;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Program {
 
 	public static void main(String[] args) {
-		 String api="http://localhost:5000/api/myapi/";
+		 String api="http://localhost:50092/api/myapi/";
 		 AutoDotNetCoreApiBuilder builder=new AutoDotNetCoreApiBuilder(api, "");
          AutoDotNetCoreApiTable<Employee> employee=builder.Table("Employees", Employee[].class);
-         Employee[] arr=employee.GetResult();
-         System.out.print(Arrays.toString(arr));
+         employee.GetResult(new ApiSelectCallback<Employee>() {
+
+			@Override
+			public void call(Employee[] arr) {
+				System.out.println(Arrays.toString(arr));
+				
+			}
+
+			
+			@Override
+			public void onFailure(IOException arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+        	 
+         });
          
-         Employee em=new Employee();
+         
+        Employee em=new Employee();
          em.firstName="from ";
          em.lastName="java";
          boolean res=employee.Add(em);
@@ -23,7 +39,9 @@ public class Program {
         	 e1.lastName="javaup";
         	 employee.Where("lastname").Equals("java").Update(e1);
          }
+        
          
 	}
 
 }
+*/

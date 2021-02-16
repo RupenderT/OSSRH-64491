@@ -11,5 +11,5 @@ public class PostData {
 	ArrayList<SqlSort> orderBy = new ArrayList<SqlSort>();
 	boolean isDistinct = false;
 	ArrayList<Between> betweens = new ArrayList<Between>();
-	
+	Object obj;
 }
