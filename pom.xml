@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.rupendert</groupId>
 	<artifactId>autodotnetcoreapi</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<name>AutoDotNetCoreApi</name>
 	<description>Create Sql Server CRUD API Without Code</description>
 	<url>https://github.com/RupenderT/OSSRH-64491</url>
