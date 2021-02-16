@@ -22,7 +22,7 @@ public class AutoDotNetCoreApiStoredProc<T> implements IAutoDotNetCoreAPIStoredP
 		// TODO Auto-generated constructor stub
 	}
 
-	public T[] Select(String[] params,final ApiSelectCallback<T> callback) {
+	public T[] Execute(String[] params,final ApiSelectCallback<T> callback) {
 
 		String url = this.API();
 		Poster poster = new Poster(params, url,JWT);
